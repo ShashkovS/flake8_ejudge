@@ -85,6 +85,7 @@ means.
 
 
 Проверяются по умолчанию::
+
     ('E251 unexpected spaces around keyword / parameter equals', 148444)
     ('E226 missing whitespace around arithmetic operator', 22104)
     ('A001 $0 is a python builtin and is being shadowed, consider renaming the variable', 20994)
