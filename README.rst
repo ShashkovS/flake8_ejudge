@@ -46,7 +46,7 @@
 Эти настройки можно выполнять на уровне каждой задачи, а также на уровне языкового процессора.
 При необходимости можно добавить игнорирование отдельных ошибок такой настройкой::
 
-    style_checker_env = "flake8_ignore=W293,W292,W291,W391,F405,E722,E743,E101,F403,E721"
+    style_checker_env = "flake8_ignore=W293,W292,W291,W391,F405,E722,E743,E101,F403,E721,E226"
     style_checker_env = "max_line_length=120"  (по умолчанию стоит 160)
 
 Кроме того, имеются следующие настройки::
@@ -97,6 +97,7 @@ means.
     ('W293 blank line contains whitespace', 171558)
     ('W292 no newline at end of file', 105226)
     ('W291 trailing whitespace', 83670)
+    ('E226 missing whitespace around arithmetic operator', 22104)
     ('W391 blank line at end of file', 12594)
     ('F405 $0 may be undefined, or defined from star imports: $1', 37415)
     ("E722 do not use bare except'", 858)
@@ -109,7 +110,6 @@ means.
 Проверяются по умолчанию::
 
     ('E251 unexpected spaces around keyword / parameter equals', 148444)
-    ('E226 missing whitespace around arithmetic operator', 22104)
     ('A001 $0 is a python builtin and is being shadowed, consider renaming the variable', 20994)
     ('E305 expected 2 blank lines after class or function definition, found $0', 20615)
     ("E211 whitespace before '('", 10875)

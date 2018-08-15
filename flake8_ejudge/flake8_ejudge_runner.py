@@ -9,7 +9,7 @@ import io
 
 FLAKE = 'flake8'
 MAX_LEN = 160
-IGNORE = 'W293,W292,W291,W391,F405,E722,E743,E101,F403,E721'
+IGNORE = 'W293,W292,W291,W391,F405,E722,E743,E101,F403,E721,E226'
 TIMEOUT = 5
 MAX_COMPLEXITY = 9
 MAX_ERRORS_TO_SHOW = 10
@@ -74,7 +74,7 @@ def flake8_it(src_name: str, f_obj):
             rem = tot_errors - max_errors
             tail = 'ий' if 5 <= rem % 100 <= 20 else 'ия' if 1 < rem % 10 < 5 else 'ие'
             add = '\n' + '=' * 50 + \
-                  'Там ещё {} замечан{} к стилю.'.format(rem, tail) + \
+                  '\nТам ещё {} замечан{} к стилю.\n'.format(rem, tail) + \
                   'Используйте автоформатирование кода: Ctrl+Alt+L в PyCharm или сервис https://black.now.sh'
             stdout_data += add
         errors_found = True
