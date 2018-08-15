@@ -22,7 +22,7 @@
     style_checker_env = "chk_in_or_not_1=in"
     style_checker_env = "chk_err_msg_1=Запрещается использовать методы find и rfind"
 
-    style_checker_env = "chk_pattern_2=def my_func(parm1: type1, parm2: type2) -> type3:"
+    style_checker_env = "chk_pattern_2=def my_func\(parm1: type1, parm2: type2\) -> type3:"
     style_checker_env = "chk_in_or_not_2=not"
     style_checker_env = "chk_err_msg_2=Необходима реализация функции сигнатуры `def my_func(parm1: type1, parm2: type2) -> type3:`"
 
