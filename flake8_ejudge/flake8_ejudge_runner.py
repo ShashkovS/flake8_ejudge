@@ -109,11 +109,10 @@ def flake8_it(src_name: str, f_obj):
 
 def main():
     # ejudge вызывает валидатор с единственным параметром — именем файла, которому необходима проверка.
-    # if len(sys.argv) < 2:
-    #     sys.stderr.write('Usage: flake8ejudge filename\n')
-    #     sys.exit(1)
-    # src_name = sys.argv[1]
-    src_name = r'Y:\yn.py'
+    if len(sys.argv) < 2:
+        sys.stderr.write('Usage: flake8ejudge filename\n')
+        sys.exit(1)
+    src_name = sys.argv[1]
     exit_code = flake8_it(src_name, f_obj=sys.stderr)
     sys.exit(exit_code)
 
