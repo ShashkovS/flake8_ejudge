@@ -14,7 +14,7 @@ MAX_COMPLEXITY = 9
 MAX_ERRORS_TO_SHOW = 10
 
 
-def main(src_name: str, f_obj):
+def flake8_it(src_name: str, f_obj):
     errors_found = False
     # Если имя файла не заканчивается на .py, то игнорируем
     if not src_name.lower().endswith('.py'):
@@ -102,11 +102,15 @@ def main(src_name: str, f_obj):
         return 1
 
 
-if __name__ == '__main__':
+def main():
     # ejudge вызывает валидатор с единственным параметром — именем файла, которому необходима проверка.
     if len(sys.argv) < 2:
         sys.stderr.write('flake8ejudge filename')
         sys.exit(1)
     src_name = sys.argv[1]
-    exit_code = main(src_name, f_obj=sys.stderr)
+    exit_code = flake8_it(src_name, f_obj=sys.stderr)
     sys.exit(exit_code)
+
+
+if __name__ == '__main__':
+    main()

@@ -83,9 +83,9 @@ setup(
     # py_modules=['mypackage'],
 
     entry_points={
-        'console_scripts': ['flake8ejudge=flake8ejudge:main'],
+        'console_scripts': ['flake8ejudge=flake8ejudge.flake8ejudge:main'],
         'flake8.report': ['flake8ejudgeformatter = flake8ejudgeformatter:Flake8EjudgeFormatter'],
-        'flake8.extension': ['N179 = returnyesno:returnyesno'],
+        'flake8.extension': ['N179 = flake8returnyesno:returnyesno'],
     },
     install_requires=REQUIRED,
     include_package_data=True,

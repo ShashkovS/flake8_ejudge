@@ -1,5 +1,5 @@
 from flake8.formatting import base
-from ru_errors import *
+from flake8ruerrors import *
 
 LINE_STARTER = '>Line '
 

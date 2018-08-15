@@ -13,4 +13,4 @@ def returnyesno(physical_line):
 
 
 returnyesno.name = 'return_yes_no_checker'
-returnyesno.version = '0.0.1'
+returnyesno.version = '0.1'
