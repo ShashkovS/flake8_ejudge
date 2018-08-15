@@ -27,7 +27,7 @@
     style_checker_env = "chk_err_msg_2=Необходима реализация функции сигнатуры `def my_func(parm1: type1, parm2: type2) -> type3:`"
 
     style_checker_env = "chk_pattern_3=(?m)^def\s+(\w+)\s*\(.*\n?(^(:?[ \t].*|)$\n)*[ \t].*?\1\s*\("
-    style_checker_env = "chk_in_or_not_3=in"
+    style_checker_env = "chk_in_or_not_3=not"
     style_checker_env = "chk_err_msg_3=Решение необходимо оформить в виде рекурсивной функции"
 
 Для каждой проверки требуется три переменных: ``chk_pattern_i``, ``chk_in_or_not_i`` и ``chk_err_msg_i``.
