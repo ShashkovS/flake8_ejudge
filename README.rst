@@ -64,7 +64,7 @@
 
 либо из под юзера ``ejudge``
 
-``pip install git+https://github.com/ShashkovS/flake8_ejudge --user --install-option="--install-scripts=/usr/bin"``
+``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --user --install-option="--install-scripts=/usr/bin"``
 
 
 
