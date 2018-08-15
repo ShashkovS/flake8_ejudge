@@ -8,7 +8,7 @@ from flake8ejudgeformatter import LINE_STARTER
 
 FLAKE = 'flake8'
 MAX_LEN = 160
-IGNORE = 'W293,W292,W291,W391,F405,E722,E741,E743,E101,F403'
+IGNORE = 'W293,W292,W291,W391,F405,E722,E743,E101,F403,E721'
 TIMEOUT = 5
 MAX_COMPLEXITY = 9
 MAX_ERRORS_TO_SHOW = 10
@@ -41,15 +41,18 @@ def main(src_name: str, f_obj):
     else:
         flake_parms.append('--max-line-length=' + str(MAX_LEN))
 
-    if 'max-complexity' in evs:
+    if 'max-complexity' in evs and evs['max_line_length'].isdecimal() and int(evs['max_line_length']) < 99:
         flake_parms.append('--max-complexity=' + evs['max_line_length'])
+    elif 'max-complexity' in evs and evs['max_line_length'].isdecimal() and int(evs['max_line_length']) >= 99:
+        pass
     else:
         flake_parms.append('--max-complexity=' + str(MAX_COMPLEXITY))
 
     max_errors = evs.get('max_errors_to_show', MAX_ERRORS_TO_SHOW)
 
     # Запускаем flake
-    pr = subprocess.Popen([FLAKE] + flake_parms + [src_name],
+    to_run = [FLAKE] + flake_parms + [src_name]
+    pr = subprocess.Popen(to_run,
                           stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)  # Запускаем процесс
     stdout_data_b, stderr_data_b = pr.communicate(timeout=TIMEOUT)  # Передаём данные в StdIN
     if stderr_data_b:
@@ -101,6 +104,9 @@ def main(src_name: str, f_obj):
 
 if __name__ == '__main__':
     # ejudge вызывает валидатор с единственным параметром — именем файла, которому необходима проверка.
+    if len(sys.argv) < 2:
+        sys.stderr.write('flake8ejudge filename')
+        sys.exit(1)
     src_name = sys.argv[1]
     exit_code = main(src_name, f_obj=sys.stderr)
     sys.exit(exit_code)

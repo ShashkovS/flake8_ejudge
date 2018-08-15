@@ -29,9 +29,13 @@
 Эти настройки можно выполнять на уровне каждой задачи, а также на уровне языкового процессора.
 При необходимости можно добавить игнорирование отдельных ошибок такой настройкой::
 
-    style_checker_env = "flake8_ignore=W293,W292,W291,W391,F405,E722,E741,E743"
+    style_checker_env = "flake8_ignore=W293,W292,W291,W391,F405,E722,E743,E101,F403,E721"
     style_checker_env = "max_line_length=120"  (по умолчанию стоит 160)
 
+Кроме того, имеются следующие настройки::
+
+    style_checker_env = "max-complexity=10"  (максимальная цикломатическая сложность, 99, чтобы отключить проверку)
+    style_checker_env = "max_errors_to_show=10"  (максимальная количество замечаний в отчёте)
 
 
 Установка
@@ -39,11 +43,11 @@
 
 Для установки пакета необходимо либо из под ``root``/``sudo`` выполнить в терминале
 
-``pip install git+https://github.com/ShashkovS/flake8-ejudge``
+``pip3 install git+https://github.com/ShashkovS/flake8-ejudge``
 
 либо из под юзера ``ejudge``
 
-``pip install git+https://github.com/ShashkovS/flake8-ejudge --user``
+``pip3 install git+https://github.com/ShashkovS/flake8-ejudge --user``
 
 
 После этого нужно добавить в ``serve.cfg`` в часть с описанием языкового процессора команду запуска::
@@ -54,7 +58,7 @@
     long_name = "Python3 3.6.5"
     arch = "linux-shared"
     src_sfx = ".py"
-    style_checker_cmd = "flake8-ejudge"                        <- Вот здесь самое важное
+    style_checker_cmd = "flake8ejudge"                        <- Вот здесь самое важное
     style_checker_env = "flake8_ignore=E4,E51,W234"            <- По желанию
     style_checker_env = "max_line_length=120"                  <- По желанию. По умолчанию стоит 160
 
@@ -80,8 +84,10 @@ means.
     ('W391 blank line at end of file', 12594)
     ('F405 $0 may be undefined, or defined from star imports: $1', 37415)
     ("E722 do not use bare except'", 858)
-    ('E741 ambiguous variable name $0', 7840)
     ('E743 ambiguous function definition $0', 119)
+    ('E101 indentation contains mixed spaces and tabs', 1)
+    ('F403 ‘from module import *’ used; unable to detect undefined names', 13442)
+    ('E721 Do not compare types, use isinstance()', 205)
 
 
 Проверяются по умолчанию::
@@ -90,9 +96,9 @@ means.
     ('E226 missing whitespace around arithmetic operator', 22104)
     ('A001 $0 is a python builtin and is being shadowed, consider renaming the variable', 20994)
     ('E305 expected 2 blank lines after class or function definition, found $0', 20615)
-    ('F403 $0 used; unable to detect undefined names', 13442)
     ("E211 whitespace before '('", 10875)
     ('E302 expected 2 blank lines, found $0', 9173)
+    ('E741 ambiguous variable name $0', 7840)
     ('E111 indentation is not a multiple of four', 7619)
     ('F401 $0 imported but unused', 7017)
     ('F821 undefined name $0', 6865)
@@ -132,7 +138,6 @@ means.
     ('E201 whitespace after $0', 232)
     ('E713 test for membership should be $0', 214)
     ('E116 unexpected indentation $0', 210)
-    ('E721 do not compare types, use $0$1', 205)
     ('E202 whitespace before $0', 203)
     ('E266 too many leading $0 for block comment', 159)
     ('E128 continuation line under-indented for visual indent', 140)
@@ -176,5 +181,4 @@ means.
     ('F701 $0 outside loop', 2)
     ('E121 continuation line under-indented for hanging indent', 1)
     ('E999 SyntaxError: positional argument follows keyword argument', 1)
-    ('E101 indentation contains mixed spaces and tabs', 1)
     ("E999 SyntaxError: can't assign to comparison", 1)"""

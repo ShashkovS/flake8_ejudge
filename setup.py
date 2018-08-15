@@ -85,6 +85,7 @@ setup(
     entry_points={
         'console_scripts': ['flake8ejudge=flake8ejudge.__main__:main'],
         'flake8.report': ['flake8ejudgeformatter = flake8ejudgeformatter:Flake8EjudgeFormatter'],
+        'flake8.extension': ['N179 = returnyesno:returnyesno'],
     },
     install_requires=REQUIRED,
     include_package_data=True,
