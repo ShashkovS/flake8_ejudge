@@ -58,15 +58,9 @@
 Установка
 ---------
 
-Для установки пакета необходимо либо из под ``root``/``sudo`` выполнить в терминале
+Для установки пакета необходимо из под юзера ``ejudge`` выполнить команду
 
-``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --install-option="--install-scripts=/usr/local/bin"``
-
-либо из под юзера ``ejudge``
-
-``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --user --install-option="--install-scripts=/usr/bin"``
-
-
+``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --user --install-option="--install-scripts=~/bin"``
 
 После этого нужно добавить в ``serve.cfg`` в часть с описанием языкового процессора команду запуска::
 
@@ -76,9 +70,13 @@
     long_name = "Python3 3.6.5"
     arch = "linux-shared"
     src_sfx = ".py"
-    style_checker_cmd = "flake8ejudge"                        <- Вот здесь самое важное
+    style_checker_cmd = "/home/ejudge/bin/flake8ejudge"        <- Вот здесь самое важное
     style_checker_env = "flake8_ignore=E4,E51,W234"            <- По желанию
     style_checker_env = "max_line_length=120"                  <- По желанию. По умолчанию стоит 160
+
+
+Либо можно прописать все эти параметры через GUI. В настройках контеста необходимо перейти на вкладку «Language settings»,
+выбрать Python..., вставить ``flake8ejudge`` в поле «Style checker command:».
 
 
 License

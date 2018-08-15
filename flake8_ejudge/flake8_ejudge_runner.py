@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
-import subprocess
 import re
 from flake8_ejudge.flake8_ejudgeformatter import LINE_STARTER
+from flake8.main import application
+import io
 
 FLAKE = 'flake8'
 MAX_LEN = 160
@@ -50,16 +51,20 @@ def flake8_it(src_name: str, f_obj):
 
     max_errors = evs.get('max_errors_to_show', MAX_ERRORS_TO_SHOW)
 
+    # Делаем так, чтобы flake8 налогировал нам в переменную
+    old_stdout = sys.stdout
+    log_capture_string = io.StringIO()
+    sys.stdout = log_capture_string
     # Запускаем flake
     to_run = [FLAKE] + flake_parms + [src_name]
-    pr = subprocess.Popen(to_run,
-                          stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)  # Запускаем процесс
-    stdout_data_b, stderr_data_b = pr.communicate(timeout=TIMEOUT)  # Передаём данные в StdIN
-    if stderr_data_b:
-        f_obj.write('flake8 error:\n' + stderr_data_b.decode('utf-8', 'ignore'))
-        return 1
-    if stdout_data_b:
-        stdout_data = '\n' + stdout_data_b.decode('utf-8', 'ignore')
+    app = application.Application()
+    app.run(to_run)
+    # Вытягиваем данные
+    sys.stdout = old_stdout
+    stdout_data = log_capture_string.getvalue()
+    log_capture_string.close()
+    if stdout_data:
+        stdout_data = '\n' + stdout_data
         tot_errors = stdout_data.count('\n' + LINE_STARTER)
         if tot_errors > max_errors:
             ps = -1
@@ -104,10 +109,11 @@ def flake8_it(src_name: str, f_obj):
 
 def main():
     # ejudge вызывает валидатор с единственным параметром — именем файла, которому необходима проверка.
-    if len(sys.argv) < 2:
-        sys.stderr.write('Usage: flake8ejudge filename\n')
-        sys.exit(1)
-    src_name = sys.argv[1]
+    # if len(sys.argv) < 2:
+    #     sys.stderr.write('Usage: flake8ejudge filename\n')
+    #     sys.exit(1)
+    # src_name = sys.argv[1]
+    src_name = r'Y:\yn.py'
     exit_code = flake8_it(src_name, f_obj=sys.stderr)
     sys.exit(exit_code)
 
