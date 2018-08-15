@@ -12,9 +12,9 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'flake8-ejudge'
+NAME = 'flake8_ejudge'
 DESCRIPTION = 'Проверка стиля и требований к используемому синтаксису в python коде для ejudge'
-URL = 'https://github.com/ShashkovS/flake8-ejudge'
+URL = 'https://github.com/ShashkovS/flake8_ejudge'
 EMAIL = 'sh57@yandex.ru'
 AUTHOR = 'Sergey Shashkov'
 VERSION = 0.1

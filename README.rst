@@ -43,11 +43,11 @@
 
 Для установки пакета необходимо либо из под ``root``/``sudo`` выполнить в терминале
 
-``pip3 install git+https://github.com/ShashkovS/flake8-ejudge``
+``pip3 install git+https://github.com/ShashkovS/flake8_ejudge``
 
 либо из под юзера ``ejudge``
 
-``pip3 install git+https://github.com/ShashkovS/flake8-ejudge --user``
+``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --user``
 
 
 После этого нужно добавить в ``serve.cfg`` в часть с описанием языкового процессора команду запуска::
