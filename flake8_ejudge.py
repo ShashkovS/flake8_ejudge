@@ -4,7 +4,7 @@ import sys
 import os
 import subprocess
 import re
-from flake8ejudgeformatter import LINE_STARTER
+from flake8_ejudgeformatter import LINE_STARTER
 
 FLAKE = 'flake8'
 MAX_LEN = 160
