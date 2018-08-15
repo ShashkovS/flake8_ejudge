@@ -17,7 +17,7 @@ DESCRIPTION = 'Проверка стиля и требований к испол
 URL = 'https://github.com/ShashkovS/flake8_ejudge'
 EMAIL = 'sh57@yandex.ru'
 AUTHOR = 'Sergey Shashkov'
-VERSION = 0.2
+VERSION = 0.3
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -75,6 +75,7 @@ setup(
     version=VERSION,
     description=DESCRIPTION,
     long_description=long_description,
+    long_description_content_type='text/x-rst',
     author=AUTHOR,
     author_email=EMAIL,
     url=URL,
@@ -83,9 +84,9 @@ setup(
     # py_modules=['mypackage'],
 
     entry_points={
-        'console_scripts': ['flake8ejudge=flake8_ejudge.flake8_ejudge:main'],
-        'flake8.report': ['flake8ejudgeformatter = flake8_ejudgeformatter:Flake8EjudgeFormatter'],
-        'flake8.extension': ['N179 = flake8_returnyesno:returnyesno'],
+        'console_scripts': ['flake8ejudge=flake8_ejudge.flake8_ejudge_runner:main'],
+        'flake8.report': ['flake8ejudgeformatter = flake8_ejudge.flake8_ejudgeformatter:Flake8EjudgeFormatter'],
+        'flake8.extension': ['N179 = flake8_ejudge.flake8_returnyesno:returnyesno'],
     },
     install_requires=REQUIRED,
     include_package_data=True,
@@ -93,7 +94,14 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Framework :: Flake8',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Education',
         'License :: OSI Approved :: MIT License',
+        'Natural Language :: Russian',
+        'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',

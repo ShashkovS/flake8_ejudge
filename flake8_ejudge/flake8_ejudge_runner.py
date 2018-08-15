@@ -4,7 +4,7 @@ import sys
 import os
 import subprocess
 import re
-from flake8_ejudgeformatter import LINE_STARTER
+from flake8_ejudge.flake8_ejudgeformatter import LINE_STARTER
 
 FLAKE = 'flake8'
 MAX_LEN = 160
@@ -73,7 +73,7 @@ def flake8_it(src_name: str, f_obj):
                   'Используйте автоформатирование кода: Ctrl+Alt+L в PyCharm или сервис https://black.now.sh'
             stdout_data += add
         errors_found = True
-        f_obj.write(stdout_data)
+        f_obj.write(stdout_data[1:])
 
     # Читаем исходники
     try:
