@@ -18,12 +18,29 @@
 Настройка выполняется в ``serve.cfg`` путём указания переменных окружения для style-checker'а.
 Добавляются примерно такие настройки::
 
-    style_checker_env = "chk_pattern_1=find|rfind"
+    style_checker_env = "chk_pattern_1=\.find\b|\.rfind\b"
     style_checker_env = "chk_in_or_not_1=in"
-    style_checker_env = "chk_err_msg_1=Запрещается использовать find и rfind"
+    style_checker_env = "chk_err_msg_1=Запрещается использовать методы find и rfind"
+
     style_checker_env = "chk_pattern_2=def my_func(parm1: type1, parm2: type2) -> type3:"
     style_checker_env = "chk_in_or_not_2=not"
     style_checker_env = "chk_err_msg_2=Необходима реализация функции сигнатуры `def my_func(parm1: type1, parm2: type2) -> type3:`"
+
+    style_checker_env = "chk_pattern_3=(?m)^def\s+(\w+)\s*\(.*\n?(^(:?[ \t].*|)$\n)*[ \t].*?\1\s*\("
+    style_checker_env = "chk_in_or_not_3=in"
+    style_checker_env = "chk_err_msg_3=Решение необходимо оформить в виде рекурсивной функции"
+
+Для каждой проверки требуется три переменных: ``chk_pattern_i``, ``chk_in_or_not_i`` и ``chk_err_msg_i``.
+Число i должно быть от 1 до 30 без ведущих нулей. Допускаются пропуски.
+
+В переменной ``chk_pattern_i`` должно быть указано регулярное выражение, которое будет искаться при помощи модуля ``re``
+по всему коду. Используйте модификаторы ``(?m)`` для поднятия флага ``re.MULTILINE``, ``(?s)`` для поднятия флага
+``re.DOTALL``, и вообще: вот документация https://docs.python.org/3/library/re.html, вот статья: https://habr.com/post/349860/.
+
+В переменной ``chk_in_or_not_i`` должна быть указана либо константа ``in``, либо константа ``not``.
+В первом случае ошибка будет, если соответствие регулярному выражению не будет найдено, во втором — наоборот.
+
+И наконец, в переменной ``chk_err_msg_i`` необходимо указать сообщение, которое выдаст валидатор стиля на ошибку.
 
 
 Эти настройки можно выполнять на уровне каждой задачи, а также на уровне языкового процессора.
