@@ -19,11 +19,11 @@
 Добавляются примерно такие настройки::
 
     style_checker_env = "chk_pattern_1=\.find\b|\.rfind\b"
-    style_checker_env = "chk_in_or_not_1=in"
+    style_checker_env = "chk_in_or_not_1=not"
     style_checker_env = "chk_err_msg_1=Запрещается использовать методы find и rfind"
 
     style_checker_env = "chk_pattern_2=def my_func\(parm1: type1, parm2: type2\) -> type3:"
-    style_checker_env = "chk_in_or_not_2=not"
+    style_checker_env = "chk_in_or_not_2=in"
     style_checker_env = "chk_err_msg_2=Необходима реализация функции сигнатуры `def my_func(parm1: type1, parm2: type2) -> type3:`"
 
     style_checker_env = "chk_pattern_13=b32_FA7W2KK6MRSWMXDTFMUFY5ZLFFOHGKS4FAXCUXDOH4UD6OS6FA7TUWZALR2F2LRKPQUSIXDOFEVFWIC4OROS4KR7LRRFYMK4OMVFYKA="

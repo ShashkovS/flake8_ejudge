@@ -98,10 +98,8 @@ def flake8_it(src_name: str, f_obj):
         pattern, in_or_not, msg = check
         if pattern.startswith('b32_'):
             pattern = base64.b32decode(pattern[4:].upper().encode()).decode('utf-8')
-        print(pattern)
 
         check_found = bool(re.search(pattern, source))
-        print(check_found)
         if (check_found and in_or_not != 'in') or (not check_found and in_or_not != 'not'):
             f_obj.write(msg)
             f_obj.write('\n')
