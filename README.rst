@@ -40,7 +40,8 @@
 то нужно применить к ней функцию ``'b32_' + base64.b32encode(style_regex.encode('utf-8')).decode()``.
 И именно такую, закодированную в base32 строку с префиксом ``b32_`` нужно указать в настройке.
 
-Регулярка ``b32_FA7W2KK6MRSWMXDTFMUFY5ZLFFOHGKS4FAXCUXDOH4UD6OS6FA7TUWZALR2F2LRKPQUSIXDOFEVFWIC4OROS4KR7LRRFYMK4OMVFYKA=`` — это ``(?m)^def\s+(\w+)\s*\(.*\n?(?:^(?:[ \t].*|)$\n)*[ \t].*?\b\1\s*\(``.
+Регулярка ``b32_FA7W2KK6MRSWMXDTFMUFY5ZLFFOHGKS4FAXCUXDOH4UD6OS6FA7TUWZALR2F2LRKPQUSIXDOFEVFWIC4OROS4KR7LRRFYMK4OMVFYKA=`` —
+это ``(?m)^def\s+(\w+)\s*\(.*\n?(?:^(?:[ \t].*|)$\n)*[ \t].*?\b\1\s*\(``.
 Она находит рекурсивный вызов питоновской функции.
 
 В переменной ``chk_in_or_not_i`` должна быть указана либо константа ``in``, либо константа ``not``.
