@@ -6,6 +6,7 @@ import re
 from flake8_ejudge.flake8_ejudgeformatter import LINE_STARTER
 from flake8.main import application
 import io
+import base64
 
 FLAKE = 'flake8'
 MAX_LEN = 160
@@ -95,6 +96,8 @@ def flake8_it(src_name: str, f_obj):
         if not all(check):
             continue
         pattern, in_or_not, msg = check
+        if pattern.startswith('b64_'):
+            pattern = base64.b64decode(pattern[4:].encode()).decode('utf-8')
 
         check_found = bool(re.search(pattern, source))
         if (check_found and in_or_not != 'in') or (not check_found and in_or_not != 'not'):

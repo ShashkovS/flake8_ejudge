@@ -26,7 +26,7 @@
     style_checker_env = "chk_in_or_not_2=not"
     style_checker_env = "chk_err_msg_2=Необходима реализация функции сигнатуры `def my_func(parm1: type1, parm2: type2) -> type3:`"
 
-    style_checker_env = "chk_pattern_13=(?m)^def\s+(\w+)\s*\(.*\n?(?:^(?:[ \t].*|)$\n)*[ \t].*?\1\s*\("
+    style_checker_env = "chk_pattern_13=b64_KD9tKV5kZWZccysoXHcrKVxzKlwoLioKPyg/Ol4oPzpbIAldLip8KSQKKSpbIAldLio/CAFccypcKA=="
     style_checker_env = "chk_in_or_not_13=not"
     style_checker_env = "chk_err_msg_13=Решение необходимо оформить в виде рекурсивной функции"
 
@@ -36,6 +36,11 @@
 В переменной ``chk_pattern_i`` должно быть указано регулярное выражение, которое будет искаться при помощи модуля ``re``
 по всему коду. Используйте модификаторы ``(?m)`` для поднятия флага ``re.MULTILINE``, ``(?s)`` для поднятия флага
 ``re.DOTALL``, и вообще: вот документация https://docs.python.org/3/library/re.html, вот статья: https://habr.com/post/349860/.
+Если в регулярке ``style_regex`` есть спецсимволы, то нужно применить к ней функцию ``'b64_' + base64.b64encode(style_regex.encode('utf-8')).decode()``.
+И именно такую, закодированную в base64 строку с префиксом ``b64_`` нужно указать в настройке.
+
+Регулярка ``b64_KD9tKV5kZWZccysoXHcrKVxzKlwoLioKPyg/Ol4oPzpbIAldLip8KSQKKSpbIAldLio/CAFccypcKA==`` — это ``(?m)^def\s+(\w+)\s*\(.*\n?(?:^(?:[ \t].*|)$\n)*[ \t].*?\b\1\s*\(``.
+Она находит рекурсивный вызов питоновской функции.
 
 В переменной ``chk_in_or_not_i`` должна быть указана либо константа ``in``, либо константа ``not``.
 В первом случае ошибка будет, если соответствие регулярному выражению не будет найдено, во втором — наоборот.
