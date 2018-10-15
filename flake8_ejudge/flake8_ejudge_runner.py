@@ -96,7 +96,9 @@ def flake8_it(src_name: str, f_obj):
         if not all(check):
             continue
         pattern, in_or_not, msg = check
+        print(pattern)
         if pattern.startswith('b64_'):
+            print(base64.b64decode(pattern[4:].encode()))
             pattern = base64.b64decode(pattern[4:].encode()).decode('utf-8')
 
         check_found = bool(re.search(pattern, source))
