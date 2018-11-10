@@ -26,7 +26,7 @@ def flake8_it(src_name: str, f_obj):
         return 0
     # Дополняем стандартные параметры значениями из env
     # Заменяем все "-" на "_" и убираем ведущие "--", если они были
-    evs = {key: val.replace("-", '_').lstrip('_').lower() for key, val in os.environ.items()}
+    evs = {key.replace("-", '_').lstrip('_').lower(): val.replace("-", '_').lstrip('_').lower() for key, val in os.environ.items()}
     flake_parms = [
         '--show-source',
         '--jobs=1',
@@ -43,9 +43,9 @@ def flake8_it(src_name: str, f_obj):
     else:
         flake_parms.append('--max-line-length=' + str(MAX_LEN))
 
-    if 'max-complexity' in evs and evs['max_line_length'].isdecimal() and int(evs['max_line_length']) < 99:
+    if 'max_complexity' in evs and evs['max_complexity'].isdecimal() and int(evs['max_complexity']) < 99:
         flake_parms.append('--max-complexity=' + evs['max_line_length'])
-    elif 'max-complexity' in evs and evs['max_line_length'].isdecimal() and int(evs['max_line_length']) >= 99:
+    elif 'max_complexity' in evs and evs['max_complexity'].isdecimal() and int(evs['max_complexity']) >= 99:
         pass
     else:
         flake_parms.append('--max-complexity=' + str(MAX_COMPLEXITY))
