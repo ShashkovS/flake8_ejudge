@@ -37,6 +37,9 @@ def flake8_it(src_name: str, f_obj):
         flake_parms.append('--ignore=' + evs['flake8_ignore'])
     else:
         flake_parms.append('--ignore=' + IGNORE)
+    f_obj.write('p--ignore=' + evs['flake8_ignore'])
+    f_obj.write('d--ignore=' + IGNORE)
+    f_obj.write('evs=' + repr(evs))
 
     if 'max_line_length' in evs:
         flake_parms.append('--max-line-length=' + evs['max_line_length'])
