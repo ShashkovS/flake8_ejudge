@@ -57,9 +57,10 @@ def flake8_it(src_name: str, f_obj):
     log_capture_string = io.StringIO()
     sys.stdout = log_capture_string
     # Запускаем flake
-    to_run = [FLAKE] + flake_parms + [src_name]
     app = application.Application()
-    app.run(to_run)
+    app.initialize(flake_parms)
+    app.run_checks([src_name])
+    app.report_errors()
     # Вытягиваем данные
     sys.stdout = old_stdout
     stdout_data = log_capture_string.getvalue()
