@@ -125,7 +125,7 @@ def style_check(src_name: str, f_obj):
 
     # Запускаем flake8
     errors_found_flake = False
-    if 'regexonly' not in evs and 'noflake8' in evs:
+    if 'regexonly' not in evs:
         errors_found_flake, stdout_data_flake = run_flake8(src_name, evs)
         f_obj.write(stdout_data_flake)
     # Запускаем проверки по регуляркам

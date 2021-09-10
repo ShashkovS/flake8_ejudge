@@ -17,7 +17,7 @@ DESCRIPTION = 'Проверка стиля и требований к испол
 URL = 'https://github.com/ShashkovS/flake8_ejudge'
 EMAIL = 'sh57@yandex.ru'
 AUTHOR = 'Sergey Shashkov'
-VERSION = '0.4.2'
+VERSION = '0.4.3'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
