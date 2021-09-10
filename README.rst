@@ -64,7 +64,9 @@ __ https://goo.gl/eV9fQp
     style_checker_env = "max-complexity=10"  (максимальная цикломатическая сложность, 99, чтобы отключить проверку)
     style_checker_env = "max_errors_to_show=10"  (максимальная количество замечаний в отчёте)
 
-Ещё можно вообще отключить запуск `flake8`, если указать параметр `style_checker_env = "regexonly"`.
+Ещё можно вообще отключить запуск `flake8`, если указать параметр
+
+``style_checker_env = "regexonly=1"``
 
 Установка
 ---------
@@ -74,6 +76,7 @@ __ https://goo.gl/eV9fQp
 ``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --user``
 
 Затем скопировать скрипт в удобное место (заменить ejcompile на ejudge, если проверка происходит из-под ejudge):
+
 ``cp /home/ejcompile/.local/bin/flake8ejudge /home/ejcompile/bin/flake8ejudge``
 
 После этого нужно добавить в ``serve.cfg`` в часть с описанием языкового процессора команду запуска::
