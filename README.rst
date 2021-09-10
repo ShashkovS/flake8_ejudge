@@ -69,9 +69,12 @@ __ https://goo.gl/eV9fQp
 Установка
 ---------
 
-Для установки пакета необходимо из под юзера ``ejudge`` выполнить команду
+Для установки пакета необходимо из под юзера ``ejudge`` или ``ejcompile`` выполнить команду
 
-``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --user --install-option="--install-scripts=~/bin"``
+``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --user``
+
+Затем скопировать скрипт в удобное место (заменить ejcompile на ejudge, если проверка происходит из-под ejudge):
+``cp /home/ejcompile/.local/bin/flake8ejudge /home/ejcompile/bin/flake8ejudge``
 
 После этого нужно добавить в ``serve.cfg`` в часть с описанием языкового процессора команду запуска::
 
