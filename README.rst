@@ -64,6 +64,7 @@ __ https://goo.gl/eV9fQp
     style_checker_env = "max-complexity=10"  (максимальная цикломатическая сложность, 99, чтобы отключить проверку)
     style_checker_env = "max_errors_to_show=10"  (максимальная количество замечаний в отчёте)
 
+Ещё можно вообще отключить запуск `flake8`, если указать параметр `style_checker_env = "regexonly"`.
 
 Установка
 ---------

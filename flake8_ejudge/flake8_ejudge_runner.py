@@ -16,17 +16,8 @@ MAX_COMPLEXITY = 9
 MAX_ERRORS_TO_SHOW = 10
 
 
-def flake8_it(src_name: str, f_obj):
-    errors_found = False
-    # Если имя файла не заканчивается на .py, то игнорируем
-    if not src_name.lower().endswith('.py'):
-        return 0
-    # Проверяем, что это действительно файл и у нас есть к нему доступ
-    if not os.path.isfile(src_name):
-        return 0
+def parse_evs(evs: dict):
     # Дополняем стандартные параметры значениями из env
-    # Заменяем все "-" на "_" и убираем ведущие "--", если они были
-    evs = {key.replace("-", '_').lstrip('_').lower(): val.replace("-", '_').lstrip('_').lower() for key, val in os.environ.items()}
     flake_parms = [
         '--show-source',
         '--jobs=1',
@@ -34,7 +25,7 @@ def flake8_it(src_name: str, f_obj):
         '--format=flake8ejudgeformatter',
     ]
     if 'flake8_ignore' in evs:
-        flake_parms.append('--ignore=' + evs['flake8_ignore'].replace(' ','').upper())
+        flake_parms.append('--ignore=' + evs['flake8_ignore'].replace(' ', '').upper())
     else:
         flake_parms.append('--ignore=' + IGNORE)
 
@@ -51,6 +42,12 @@ def flake8_it(src_name: str, f_obj):
         flake_parms.append('--max-complexity=' + str(MAX_COMPLEXITY))
 
     max_errors = evs.get('max_errors_to_show', MAX_ERRORS_TO_SHOW)
+    return flake_parms, max_errors
+
+
+def run_flake8(src_name: str, evs: dict):
+    errors_found = False
+    flake_parms, max_errors = parse_evs(evs)
 
     # Делаем так, чтобы flake8 налогировал нам в переменную
     old_stdout = sys.stdout
@@ -79,15 +76,23 @@ def flake8_it(src_name: str, f_obj):
                   'Используйте автоформатирование кода: Ctrl+Alt+L в PyCharm или сервис https://black.now.sh'
             stdout_data += add
         errors_found = True
-        f_obj.write(stdout_data[1:])
+    else:
+        stdout_data = ' '
+    return errors_found, stdout_data[1:]
+
+
+def run_regex_checks(src_name: str, evs: dict):
+    errors_found = False
+    stdout_data = ''
 
     # Читаем исходники
     try:
         with open(src_name, 'r', encoding="utf-8", errors='ignore') as f:
             source = f.read()
     except:
-        f_obj.write('Can not parse source with encoding utf-8')
-        return 1
+        stdout_data = 'Can not parse source with encoding utf-8'
+        errors_found = True
+        return errors_found, stdout_data
 
     # Теперь вычитываем дополнительные настройки
     for i in range(1, 30):
@@ -101,12 +106,33 @@ def flake8_it(src_name: str, f_obj):
 
         check_found = bool(re.search(pattern, source))
         if (check_found and in_or_not != 'in') or (not check_found and in_or_not != 'not'):
-            f_obj.write(msg)
-            f_obj.write('\n')
+            stdout_data += msg + '\n'
             errors_found = True
+    return errors_found, stdout_data
+
+
+def style_check(src_name: str, f_obj):
+    # Если имя файла не заканчивается на .py, то игнорируем
+    if not src_name.lower().endswith('.py'):
+        return 0
+    # Проверяем, что это действительно файл и у нас есть к нему доступ
+    if not os.path.isfile(src_name):
+        return 0
+
+    # Заменяем все "-" на "_" и убираем ведущие "--", если они были
+    evs = {key.replace("-", '_').lstrip('_').lower(): val.replace("-", '_').lstrip('_').lower() for key, val in os.environ.items()}
+
+    # Запускаем flake8
+    errors_found_flake = False
+    if 'regexonly' not in evs and 'noflake8' in evs:
+        errors_found_flake, stdout_data_flake = run_flake8(src_name, evs)
+        f_obj.write(stdout_data_flake)
+    # Запускаем проверки по регуляркам
+    errors_found_regex, stdout_data_regex = run_regex_checks(src_name, evs)
+    f_obj.write(stdout_data_regex)
 
     # Выходим с ошибкой или без в зависимости от.
-    if errors_found:
+    if errors_found_flake or errors_found_regex:
         return 1
 
 
@@ -116,7 +142,7 @@ def main():
         sys.stderr.write('Usage: flake8ejudge filename\n')
         sys.exit(1)
     src_name = sys.argv[1]
-    exit_code = flake8_it(src_name, f_obj=sys.stderr)
+    exit_code = style_check(src_name, f_obj=sys.stderr)
     sys.exit(exit_code)
 
 
