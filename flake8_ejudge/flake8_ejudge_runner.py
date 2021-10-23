@@ -35,7 +35,7 @@ def parse_evs(evs: dict):
         flake_parms.append('--max-line-length=' + str(MAX_LEN))
 
     if 'max_complexity' in evs and evs['max_complexity'].isdecimal() and int(evs['max_complexity']) < 99:
-        flake_parms.append('--max-complexity=' + evs['max_line_length'])
+        flake_parms.append('--max-complexity=' + evs['max_complexity'])
     elif 'max_complexity' in evs and evs['max_complexity'].isdecimal() and int(evs['max_complexity']) >= 99:
         pass
     else:
