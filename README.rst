@@ -73,7 +73,7 @@ __ https://goo.gl/eV9fQp
 
 Для установки пакета необходимо из под юзера ``ejudge`` или ``ejcompile`` выполнить команду
 
-``pip3 install git+https://github.com/ShashkovS/flake8_ejudge --user``
+``pip3 install flake8-ejudge --user``
 
 Затем скопировать скрипт в удобное место (заменить ejcompile на ejudge, если проверка происходит из-под ejudge):
 
