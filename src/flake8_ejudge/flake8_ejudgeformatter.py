@@ -1,5 +1,5 @@
 from flake8.formatting import base
-from flake8_ejudge.flake8_ruerrors import *
+from flake8_ejudge.flake8_ruerrors import code_to_ru_text, text_to_ru_text
 
 LINE_STARTER = '>Line '
 
@@ -31,8 +31,7 @@ def _extract_template(code, text):
         rsp = text.rfind(' ')
         replacers.append(text[rsp + 1:])
         text = text[:rsp + 1] + '{1}'
-    elif code in (
-            'E301', 'E302', 'E305', 'E306'):  # expected 2 blank lines after class or function definition, found
+    elif code in ('E301', 'E302', 'E305', 'E306'):  # expected 2 blank lines after class or function definition, found
         rsp = text.rfind(' ')
         replacers.append(text[rsp + 1:])
         text = text[:rsp + 1] + '{0}'

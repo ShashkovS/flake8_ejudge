@@ -1,0 +1,2 @@
+def bas():
+    return 'yes'

@@ -41,7 +41,7 @@ def parse_evs(evs: dict):
     else:
         flake_parms.append('--max-complexity=' + str(MAX_COMPLEXITY))
 
-    max_errors = evs.get('max_errors_to_show', MAX_ERRORS_TO_SHOW)
+    max_errors = int(evs.get('max_errors_to_show', MAX_ERRORS_TO_SHOW))
     return flake_parms, max_errors
 
 
@@ -51,16 +51,18 @@ def run_flake8(src_name: str, evs: dict):
 
     # Делаем так, чтобы flake8 налогировал нам в переменную
     old_stdout = sys.stdout
-    log_capture_string = io.StringIO()
+    log_capture_string = io.BytesIO()
     sys.stdout = log_capture_string
+    sys.stdout.buffer = log_capture_string
     # Запускаем flake
     app = application.Application()
-    app.initialize(flake_parms)
-    app.run_checks([src_name])
+    # app.initialize(flake_parms)
+    # app.run_checks([src_name])
+    app.run([src_name, *flake_parms])
     app.report_errors()
     # Вытягиваем данные
     sys.stdout = old_stdout
-    stdout_data = log_capture_string.getvalue()
+    stdout_data = log_capture_string.getvalue().decode('utf-8')
     log_capture_string.close()
     if stdout_data:
         stdout_data = '\n' + stdout_data
@@ -121,7 +123,7 @@ def style_check(src_name: str, f_obj):
         return 0
 
     # Заменяем все "-" на "_" и убираем ведущие "--", если они были
-    evs = {key.replace("-", '_').lstrip('_').lower(): val.replace("-", '_').lstrip('_').lower() for key, val in os.environ.items()}
+    evs = {key.replace("-", '_').lstrip('_').lower(): val for key, val in os.environ.items()}
 
     # Запускаем flake8
     errors_found_flake = False
