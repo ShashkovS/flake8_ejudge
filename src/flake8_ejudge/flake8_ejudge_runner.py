@@ -59,7 +59,7 @@ def run_flake8(src_name: str, evs: dict):
     # app.initialize(flake_parms)
     # app.run_checks([src_name])
     app.run([src_name, *flake_parms])
-    app.report_errors()
+    # app.report_errors()
     # Вытягиваем данные
     sys.stdout = old_stdout
     stdout_data = log_capture_string.getvalue().decode('utf-8')

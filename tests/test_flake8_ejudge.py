@@ -3,7 +3,7 @@ import io
 import os
 import base64
 
-from flake8_ejudge import flake8_ejudge_runner
+import flake8_ejudge_runner
 
 E225 = 'files_to_flake/E225.py'
 TERRIBLE = 'files_to_flake/horrible.py'
@@ -27,7 +27,9 @@ class SomeTest(TestCase):
         self.assertTrue('Поставьте пробелы вокруг оператора' in res)
 
     def test_many_errors(self):
+        os.environ['max_errors_to_show'] = '500'
         res = run(TERRIBLE)
+        print(res)
         self.assertTrue('Слишком много пустых строк' in res)
         self.assertTrue('Удалите пробел после' in res)
         self.assertTrue('Удалите пробел перед' in res)
