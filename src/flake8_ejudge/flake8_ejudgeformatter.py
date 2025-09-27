@@ -78,8 +78,8 @@ class Flake8EjudgeFormatter(base.BaseFormatter):
             rutext = ''
         st = _ERROR_FORMAT.format(**locals())
         res = st + text
-        if rutext:
-            res += '\n' + ' ' * len(st) + rutext
+        # if rutext:
+        #     res += '\n' + ' ' * len(st) + rutext
         return res
 
     def show_source(self, error: Violation):
