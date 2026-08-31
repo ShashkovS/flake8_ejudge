@@ -22,7 +22,7 @@ from setuptools import find_packages, setup, Command
 
 # Package meta-data.
 NAME = 'flake8_ejudge'
-DESCRIPTION = 'Проверка стиля и требований к используемому синтаксису в python коде для ejudge'
+DESCRIPTION = 'Style and syntax requirement checker for Python code in ejudge'
 URL = 'https://github.com/ShashkovS/flake8_ejudge'
 EMAIL = 'sh57@yandex.ru'
 AUTHOR = 'Sergey Shashkov'

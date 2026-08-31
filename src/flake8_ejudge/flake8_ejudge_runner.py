@@ -17,7 +17,7 @@ MAX_ERRORS_TO_SHOW = 10
 
 
 def parse_evs(evs: dict):
-    # Дополняем стандартные параметры значениями из env
+    # Extend the standard parameters with values from the environment.
     flake_parms = [
         '--show-source',
         '--jobs=1',
@@ -49,18 +49,18 @@ def run_flake8(src_name: str, evs: dict):
     errors_found = False
     flake_parms, max_errors = parse_evs(evs)
 
-    # Делаем так, чтобы flake8 налогировал нам в переменную
+    # Capture flake8 output in memory.
     old_stdout = sys.stdout
     log_capture_string = io.BytesIO()
     sys.stdout = log_capture_string
     sys.stdout.buffer = log_capture_string
-    # Запускаем flake
+    # Run flake8.
     app = application.Application()
     # app.initialize(flake_parms)
     # app.run_checks([src_name])
     app.run([src_name, *flake_parms])
     # app.report_errors()
-    # Вытягиваем данные
+    # Extract the captured output.
     sys.stdout = old_stdout
     stdout_data = log_capture_string.getvalue().decode('utf-8')
     log_capture_string.close()
@@ -73,10 +73,9 @@ def run_flake8(src_name: str, evs: dict):
                 ps = stdout_data.find('\n' + LINE_STARTER, ps + 1)
             stdout_data = stdout_data[:ps]
             rem = tot_errors - max_errors
-            tail = 'ий' if 5 <= rem % 100 <= 20 else 'ия' if 1 < rem % 10 < 5 else 'ие'
             add = '\n' + '=' * 50 + \
-                  '\nТам ещё {} замечан{} к стилю.\n'.format(rem, tail) + \
-                  'Используйте автоформатирование кода: Ctrl+Alt+L в PyCharm или сервис https://black.now.sh'
+                  '\nThere are {} more style issues.\n'.format(rem) + \
+                  'Use code formatting: Ctrl+Alt+L in PyCharm or https://black.now.sh'
             stdout_data += add
         errors_found = True
     else:
@@ -88,7 +87,7 @@ def run_regex_checks(src_name: str, evs: dict):
     errors_found = False
     stdout_data = ''
 
-    # Читаем исходники
+    # Read the source.
     try:
         with open(src_name, 'r', encoding="utf-8", errors='ignore') as f:
             source = f.read()
@@ -97,7 +96,7 @@ def run_regex_checks(src_name: str, evs: dict):
         errors_found = True
         return errors_found, stdout_data
 
-    # Теперь вычитываем дополнительные настройки
+    # Read additional settings.
     for i in range(1, 30):
         pattern, in_or_not, msg = 'chk_pattern_' + str(i), 'chk_in_or_not_' + str(i), 'chk_err_msg_' + str(i)
         check = [evs.get(x, '') for x in (pattern, in_or_not, msg)]
@@ -115,14 +114,14 @@ def run_regex_checks(src_name: str, evs: dict):
 
 
 def style_check(src_name: str, f_obj):
-    # Проверяем, что это действительно файл и у нас есть к нему доступ
+    # Check that the source is a readable file.
     if not os.path.isfile(src_name):
         return 0
 
-    # Заменяем все "-" на "_" и убираем ведущие "--", если они были
+    # Convert '-' to '_' and remove leading '--'.
     evs = {key.replace("-", '_').lstrip('_').lower(): val for key, val in os.environ.items()}
 
-    # Запускаем flake8
+    # Run flake8.
     errors_found_flake = False
     if 'regexonly' not in evs:
         # flake8 understands only Python sources.  Regex-only checks are
@@ -131,17 +130,17 @@ def style_check(src_name: str, f_obj):
             return 0
         errors_found_flake, stdout_data_flake = run_flake8(src_name, evs)
         f_obj.write(stdout_data_flake)
-    # Запускаем проверки по регуляркам
+    # Run regex checks.
     errors_found_regex, stdout_data_regex = run_regex_checks(src_name, evs)
     f_obj.write(stdout_data_regex)
 
-    # Выходим с ошибкой или без в зависимости от.
+    # Return a style error when either check found a violation.
     if errors_found_flake or errors_found_regex:
         return 1
 
 
 def main():
-    # ejudge вызывает валидатор с единственным параметром — именем файла, которому необходима проверка.
+    # ejudge invokes the checker with one argument: the source filename.
     if len(sys.argv) < 2:
         sys.stderr.write('Usage: flake8ejudge filename\n')
         sys.exit(1)
