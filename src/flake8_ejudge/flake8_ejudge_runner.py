@@ -115,9 +115,6 @@ def run_regex_checks(src_name: str, evs: dict):
 
 
 def style_check(src_name: str, f_obj):
-    # Если имя файла не заканчивается на .py, то игнорируем
-    if not src_name.lower().endswith('.py'):
-        return 0
     # Проверяем, что это действительно файл и у нас есть к нему доступ
     if not os.path.isfile(src_name):
         return 0
@@ -128,6 +125,10 @@ def style_check(src_name: str, f_obj):
     # Запускаем flake8
     errors_found_flake = False
     if 'regexonly' not in evs:
+        # flake8 understands only Python sources.  Regex-only checks are
+        # language-neutral and deliberately support any source extension.
+        if not src_name.lower().endswith('.py'):
+            return 0
         errors_found_flake, stdout_data_flake = run_flake8(src_name, evs)
         f_obj.write(stdout_data_flake)
     # Запускаем проверки по регуляркам

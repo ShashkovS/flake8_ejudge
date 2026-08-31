@@ -1,4 +1,5 @@
 from unittest import TestCase
+from unittest.mock import patch
 import io
 import os
 import base64
@@ -11,6 +12,7 @@ LONG = 'files_to_flake/long.py'
 REGEX_CHECK_NO = 'files_to_flake/regex_check_no.py'
 REGEX_CHECK_YES = 'files_to_flake/regex_check_yes.py'
 YES_NO = 'files_to_flake/yes_no.py'
+REGEX_CHECK_SCHEMIO = 'files_to_flake/regex_check.schemio'
 
 
 def run(filename):
@@ -69,6 +71,20 @@ class SomeTest(TestCase):
 
         res = run(REGEX_CHECK_YES)
         self.assertEqual(res, '')
+
+    def test_regexonly_checks_non_python_source(self):
+        with patch.dict(
+            os.environ,
+            {
+                'regexonly': '1',
+                'chk_pattern_1': r'\band\b',
+                'chk_in_or_not_1': 'not',
+                'chk_err_msg_1': 'Only nand calls are allowed.',
+            },
+            clear=True,
+        ):
+            res = run(REGEX_CHECK_SCHEMIO)
+        self.assertIn('Only nand calls are allowed.', res)
 
     def test_yes_no(self):
         res = run(YES_NO)
