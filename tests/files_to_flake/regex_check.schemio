@@ -1,0 +1,3 @@
+scheme (a b) gate (out):
+ (a b) and (out)
+end
